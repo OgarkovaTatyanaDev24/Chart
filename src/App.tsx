@@ -4,19 +4,22 @@ import { ChartController } from "./ChartController";
 import { DataController } from "./DataController";
 import { getData } from './store/slices/chartSlices';
 import { useStoreDispatch } from './store';
+import { useSelector } from 'react-redux';
+import { urlSelector } from './store/slices/urlSlices';
 
 
 function App() {
   const dispatch = useStoreDispatch()
+  const url = useSelector(urlSelector)
   useEffect(
     () => {
-      dispatch(getData())
+      dispatch(getData(url))
       const interval = setInterval(() => {  
-        dispatch(getData())
+        dispatch(getData(url))
       }, 5000000)
        return () => clearInterval(interval);
     },
-    []
+    [url]
   )
   return ( 
     <div className={styles.container}>

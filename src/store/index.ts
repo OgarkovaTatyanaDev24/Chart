@@ -1,12 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import chartSlices from './slices/chartSlices';
+import urlSlice from './slices/urlSlices';
 
+const reducer = combineReducers({
+  chartSlices,
+  urlSlice,
+})
 
 export const store = configureStore({
-  reducer: {
-    chartSlices,
-  },
+  reducer, 
   devTools: true,
 });
 

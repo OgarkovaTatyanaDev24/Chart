@@ -10,8 +10,8 @@ const initialState: IChartState = {coord: []}
 
 export const getData = createAsyncThunk(
     'getData',
-    async () => {
-      const response = await getChartApi()
+    async (url: string) => {
+      const response = await getChartApi(url)
       console.log(response)
   
       return await response.json()

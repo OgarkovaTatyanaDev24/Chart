@@ -1,3 +1,3 @@
-export const getChartApi = async () => {
-    return await fetch('/cdn/anydata/common/11.json')
+export const getChartApi = async (url: string) => {
+    return await fetch(url)
 }
