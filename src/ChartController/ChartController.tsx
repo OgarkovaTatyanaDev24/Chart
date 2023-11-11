@@ -14,19 +14,20 @@ export function ChartController() {
   const [labelsX, setLabelsX] = useState<Array<ILegend>>([])
 
   const chart = useSelector(chartSelector)
-  const boxWidth = 656
-  const boxHeight = 400
-
+  const [boxWidth, boxHeight] = [656, 400]
+  const [spaceTop, spaceBottom, spaceLeft, spaceRight] = [20, 20, 20, 20,]
+  const [chartWidth, chartHeight] = [boxWidth-spaceLeft-spaceRight, boxHeight-spaceTop-spaceBottom]
+  
   useEffect(
     () => {
       if (chart.coord.length)
       {
         const y_max = chart.coord.filter((el => !isNaN(el.value))).reduce((acc, curr) => acc.value > curr.value ? acc : curr).value;
         const y_min = chart.coord.filter((el => !isNaN(el.value))).reduce((acc, curr) => acc.value < curr.value ? acc : curr).value;
-        const step = boxWidth/(chart.coord.length-1)
+        const step = chartWidth/(chart.coord.length-1)
         const chartCoord = chart.coord.map(
           (el, index) => {
-            return [index*step+20, boxHeight-(el.value-y_min)*boxHeight/(y_max-y_min)+10]
+            return [index*step+spaceLeft, chartHeight-(el.value-y_min)*chartHeight/(y_max-y_min)+spaceTop]
           }
         );
         const x_labels = chart.coord.map(
@@ -44,18 +45,17 @@ export function ChartController() {
 
   return (
     <div className={styles.chart}>
-      <svg viewBox={`0 0 ${boxWidth+10} ${boxHeight+20}`} className={styles.chartSvg}>
+      <svg viewBox={`0 0 ${boxWidth} ${boxHeight}`} className={styles.chartSvg}>
         
-        <rect x="20" y="10" width={boxWidth} height={boxHeight} fill='#fff6f6'/>
+        <rect x={spaceLeft} y={spaceTop} width={chartWidth} height={chartHeight} fill='#fff6f6'/>
         <polyline
           fill="none"
           stroke="#3c1717"
           stroke-width="2"
           points={points}
         />
-        {labelsX.map((element) => {
-          return (<text x={element.position} y={boxHeight+20}>{element.label}</text>)
-        })}
+        {labelsX.map((element) =>  (<text x={element.position} y={chartHeight+40}>{element.label}</text>)
+        )}
       </svg>
     </div>
   );
