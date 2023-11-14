@@ -1,17 +1,15 @@
-
-const http = require('http');
+const http = require("http");
 
 const PORT = 3001;
 
 const server = http.createServer((req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   const { url, method } = req;
 
-  if (url !== '/' || method !== 'GET') {
+  if (url !== "/" || method !== "GET") {
     res.writeHead(404).end();
-   return;
+    return;
   }
 
   let data = [];
@@ -23,6 +21,7 @@ const server = http.createServer((req, res) => {
     data.push({ x, value });
   }
 
+  res.setHeader("Content-Type", "application/json");
   res.writeHead(200);
   res.end(JSON.stringify({ data }));
 });

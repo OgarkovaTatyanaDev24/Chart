@@ -1,0 +1,30 @@
+.chart {
+  width: 656px;
+  height: 400px;
+  margin: 0 auto;
+  background: #fde4e4;
+  border-radius: 3px;
+}
+.chartSvg {
+  width: 100%;
+  height: 100%;
+  border: 1px dotted #3c1717;
+  padding: 20px 20px 20px 0;
+}
+.hoverGroup {
+  fill: #fde4e4;
+}
+.hoverGroup {
+  fill: #3c1717;
+}
+.graphLabel {
+  fill: #a07f7f;
+}
+
+.hoverLine:hover ~ .hoverLine {
+  visibility: "hidden";
+}
+
+.chartHover {
+  position: "absolute";
+}
