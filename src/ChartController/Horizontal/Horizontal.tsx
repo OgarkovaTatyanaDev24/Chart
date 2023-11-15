@@ -30,7 +30,7 @@ export function Horizontal({
   const chart = useSelector(chartSelector);
 
   useEffect(() => {
-    const x_labels = chart.coord.map((el, index) => ({
+    const xLabels = chart.coord.map((el, index) => ({
       label: el.x,
       positionX: index * borders.stepX,
       positionY:
@@ -40,23 +40,23 @@ export function Horizontal({
       step: borders.stepX,
       value: el.value,
     }));
-    setLabelsX(x_labels);
-  }, [chart, borders]);
+    setLabelsX(xLabels);
+  }, [chart, borders, chartHeight, spaceTop]);
 
   return (
     <>
-      {labelsX.map((element) => (
-        <>
+      {labelsX.map((element, index) => (
+        <g key={"horisontal" + index}>
           <text
             x={element.positionX + spaceLeft}
             y={chartHeight + 40}
-            text-anchor="middle"
+            className={styles.text}
           >
             {element.label}
           </text>
           <rect
             className={styles.rect}
-            x={element.positionX}
+            x={element.positionX + spaceLeft - element.step / 2}
             y={spaceTop}
             width={element.step}
             height={chartHeight}
@@ -69,7 +69,7 @@ export function Horizontal({
               })
             }
           />
-        </>
+        </g>
       ))}
     </>
   );

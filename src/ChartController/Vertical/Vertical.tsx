@@ -13,30 +13,35 @@ export function Vertical({
   spaceTop,
   chartHeight,
 }: {
-  borders:IBorders,
-  spaceTop: number,
-  chartHeight: number
+  borders: IBorders;
+  spaceTop: number;
+  chartHeight: number;
 }) {
+  const [labelsY, setLabelsY] = useState<Array<ILegendY>>([]);
+  const chart = useSelector(chartSelector);
 
-    const [labelsY, setLabelsY] = useState<Array<ILegendY>>([]);
-    const chart = useSelector(chartSelector);
+  useEffect(() => {
+    const yLabels = [];
+    for (let i = 0; i < borders.range / borders.stepY + 1; i++) {
+      yLabels.push({
+        position: borders.stepY * i * (chartHeight / borders.range),
+        label: borders.stepY * i + borders.minVal,
+      });
+    }
+    setLabelsY(yLabels);
+  }, [chart, borders, chartHeight]);
 
-    useEffect(() => {
-      const y_labels = [];
-      for (let i = 0; i < borders.range / borders.stepY + 1; i++) {
-        y_labels.push({
-          position: borders.stepY * i * (chartHeight / borders.range),
-          label: borders.stepY * i,
-        });
-      }
-      setLabelsY(y_labels);
-    }, [chart, borders]);
-    
-  return <>
-          {labelsY.map((element) => (
-          <text x={0} y={spaceTop + chartHeight - element.position}>
-            {element.label}
-          </text>
-        ))}
-        </>;
+  return (
+    <>
+      {labelsY.map((element, index) => (
+        <text
+          key={"vertical" + index}
+          x={0}
+          y={spaceTop + chartHeight - element.position}
+        >
+          {element.label}
+        </text>
+      ))}
+    </>
+  );
 }

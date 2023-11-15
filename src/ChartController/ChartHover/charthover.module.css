@@ -19,12 +19,15 @@
 }
 .graphLabel {
   fill: #a07f7f;
+  width: 50px;
+  height: 20px;
 }
 
-.hoverLine:hover ~ .hoverLine {
-  visibility: "hidden";
+.labelText {
+  text-anchor: middle;
+  alignment-baseline: central;
 }
 
-.chartHover {
-  position: "absolute";
+.hoverLine {
+  width: 2px;
 }

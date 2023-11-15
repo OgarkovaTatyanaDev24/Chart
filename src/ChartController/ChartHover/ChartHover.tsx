@@ -20,15 +20,7 @@ export function ChartHover({
 }) {
   return (
     (state.positionX !== undefined && state.positionY !== undefined && (
-      <g
-        style={{
-          top: spaceTop,
-          position: "absolute",
-        }}
-        height={chartHeight}
-        width={50}
-        className={styles.chartHover}
-      >
+      <g>
         <circle
           cx={state.positionX + spaceLeft}
           cy={state.positionY}
@@ -38,23 +30,18 @@ export function ChartHover({
         <rect
           x={state.positionX + spaceLeft}
           y={spaceTop}
-          width={2}
           height={chartHeight}
           className={styles.lineHover}
         />
         <rect
           x={state.positionX + spaceLeft + 5}
           y={state.positionY - 10}
-          width={50}
-          height={20}
           className={styles.graphLabel}
         />
         <text
-          x={state.positionX + spaceLeft + 25}
+          x={state.positionX + spaceLeft + 30}
           y={state.positionY}
-          className={styles.labelHover}
-          text-anchor="middle"
-          alignment-baseline="central"
+          className={styles.labelText}
         >
           {state.value}
         </text>

@@ -1,1 +1,1 @@
-export * from './DataController';
+export * from "./DataController";

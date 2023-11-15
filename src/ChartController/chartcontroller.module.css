@@ -11,3 +11,13 @@
 .hoverGroup {
   fill: #fde4e4;
 }
+
+.line {
+  fill: none;
+  stroke: #3c1717;
+  stroke-width: 2px;
+}
+
+.colorBackground {
+  fill: #fde4e4;
+}

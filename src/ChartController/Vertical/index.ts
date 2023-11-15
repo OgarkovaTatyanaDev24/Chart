@@ -1,1 +1,1 @@
-export * from './Vertical';
+export * from "./Vertical";

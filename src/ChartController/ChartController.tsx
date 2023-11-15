@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { chartSelector } from "../store/slices/chartSlices";
 import { ChartHover, IHoverState } from "./ChartHover/ChartHover";
 import { Horizontal } from "./Horizontal";
-import { ILegendY, Vertical } from "./Vertical";
+import { Vertical } from "./Vertical";
 
 export interface IBorders {
   minVal: number;
@@ -36,20 +36,20 @@ export function ChartController() {
 
   useEffect(() => {
     if (chart.coord.length) {
-      const y_max = chart.coord
+      const yMax = chart.coord
         .filter((el) => !isNaN(el.value))
         .reduce((acc, curr) => (acc.value > curr.value ? acc : curr)).value;
-      const y_min = chart.coord
+      const yMin = chart.coord
         .filter((el) => !isNaN(el.value))
         .reduce((acc, curr) => (acc.value < curr.value ? acc : curr)).value;
 
       const stepX = chartWidth / (chart.coord.length - 1);
-      const numDigits = Math.ceil(Math.log10(y_max - y_min));
+      const numDigits = Math.ceil(Math.log10(yMax - yMin));
       const stepY =
-        Math.floor((y_max - y_min) / 10 ** (numDigits - 1)) *
+        Math.floor((yMax - yMin) / 10 ** (numDigits - 1)) *
         10 ** (numDigits - 2);
-      const maxVal = Math.ceil(y_max / stepY) * stepY;
-      const minVal = Math.floor(y_min / stepY) * stepY;
+      const maxVal = Math.ceil(yMax / stepY) * stepY;
+      const minVal = Math.floor(yMin / stepY) * stepY;
       const range = maxVal - minVal;
       setBorders({
         minVal: minVal,
@@ -68,7 +68,7 @@ export function ChartController() {
       const lineCoords = chartCoord.join(" ");
       setPoints(lineCoords);
     }
-  }, [chart]);
+  }, [chart, chartHeight, chartWidth, spaceLeft, spaceTop]);
 
   return (
     <div className={styles.chart}>
@@ -82,7 +82,7 @@ export function ChartController() {
           y={0}
           width={chartWidth}
           height={chartHeight + spaceTop}
-          fill="#fde4e4"
+          className={styles.colorBackground}
         />
         <Horizontal
           borders={borders}
@@ -96,12 +96,7 @@ export function ChartController() {
           chartHeight={chartHeight}
           borders={borders}
         />
-        <polyline
-          fill="none"
-          stroke="#3c1717"
-          stroke-width="2"
-          points={points}
-        />
+        <polyline className={styles.line} points={points} />
         {hoverState.show &&
           (hoverState.positionX || hoverState.positionX === 0) &&
           (hoverState.positionY || hoverState.positionY === 0) && (
